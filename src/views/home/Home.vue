@@ -32,7 +32,6 @@
     import HomeSwiper from  './child/HomeSwiper'
     import HomeRecommend from  './child/HomeRecommend'
     import HomeFashion from './child/HomeFashion'
-
     import HomeTabContorl from  './child/HomeTabContorl'
     import HomeMsgShow from './child/HomeMsgShow'
 
@@ -42,7 +41,6 @@
             HomeNavBar,
             HomeSwiper,
             HomeRecommend,
-
             HomeFashion,
             HomeTabContorl,
             HomeMsgShow
@@ -102,21 +100,6 @@
                 })
             },
         },
-        data(){
-            return{
-                bannerList:[], //轮播图数组
-                recommendList:[],//推荐图数组
-            }
-        },
-        created() {
-            this.request({
-                url:this.url.multidata,
-                methods:'get'
-            }).then(res =>{
-                this.bannerList = res.data.banner.list //给轮播图赋值
-                this.recommendList = res.data.recommend.list
-            })
-        }
     }
 </script>
 
