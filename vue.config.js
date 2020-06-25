@@ -12,7 +12,7 @@ module.exports = {
             .set('views',resolve('src/views'))
     },
     devServer: {
-        host: 'localhost', // ip
+        host: '192.168.4.215', // ip
         // host: '192.168.3.247',
         //host: '192.168.1.102', // ip
         port: 8080, // 设置端口号

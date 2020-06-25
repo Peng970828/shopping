@@ -21,9 +21,10 @@
     line-height: 44px;
     box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
-    .nav-bar .left,.nav-bar .right{
-        width: 60px;
-    }
+.nav-bar .left,.nav-bar .right{
+    width: 60px;
+    height: 44px;
+}
 .nav-bar .center{
     flex: 1;
 }

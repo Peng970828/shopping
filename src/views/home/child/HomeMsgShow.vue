@@ -1,13 +1,12 @@
 <template>
     <div class="goods">
         <div class="item" v-for="(item,index) in showList">
-            <img :src="item.show.img" alt="">
+            <img :src="item.show.img" alt="" @load="imgLoad()">
             <div class="bottom">
                 <p class="title">{{item.title}}</p>
                 <span class="price">￥{{item.price}}</span>
                 <span class="like">{{item.cfav | formatcafv}}</span>
             </div>
-
         </div>
     </div>
 </template>
@@ -21,6 +20,17 @@
                 default(){
                     return
                 }
+            },
+            bscroll:{
+                type: Object,
+                default() {
+                    return {};
+                }
+            }
+        },
+        methods:{
+            imgLoad(){
+                this.bscroll.refresh()
             }
         },
         filters:{

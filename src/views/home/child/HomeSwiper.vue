@@ -49,9 +49,7 @@
 <style scoped>
 
 
-    .swiper{
-        margin-top: 44px;
-    }
+
 
     .swiper img{
         width: 100%;
