@@ -1,6 +1,6 @@
 <template>
     <div class="goods">
-        <div class="item" v-for="(item,index) in showList" :key="index">
+        <div class="item" v-for="(item,index) in showList" :key="index" @click="productClick(item.iid)">
             <img :src="item.show.img" alt="" @load="imgLoad()">
             <div class="bottom">
                 <p class="title">{{item.title}}</p>
@@ -29,6 +29,15 @@
             }
         },
         methods:{
+            //跳转详情页
+            productClick(id){
+                this.$router.push({
+                    path:'/productInfo',
+                    query:{
+                        iid:id
+                    }
+                })
+            },
             imgLoad(){
                 this.bscroll.refresh()
             }
