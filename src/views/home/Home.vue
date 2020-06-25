@@ -1,17 +1,19 @@
 <template>
     <div class="home">
-<!--    头部导航-->
+        <!--    头部导航-->
         <home-nav-bar></home-nav-bar>
+        <!--     滑动到一定位置的tab置顶-->
+        <home-tab-contorl v-show="tabContorl" class="tabContorl" @tabClick="tabClick" :tabContorlList="['流行','新款','精选']"></home-tab-contorl>
         <div class="wrap" ref="wrap">
             <div class="content">
                 <!--      轮播图-->
-                <home-swiper :bannerList="bannerList"></home-swiper>
+                <home-swiper @swiperFinish="swiperFinish" :bannerList="bannerList"></home-swiper>
                 <!--      推荐-->
                 <home-recommend :recommendList="recommendList"></home-recommend>
                 <!--        流行-->
                 <home-fashion></home-fashion>
                 <!--        tab选择-->
-                <home-tab-contorl @tabClick="tabClick" :tabContorlList="['流行','新款','精选']"></home-tab-contorl>
+                <home-tab-contorl ref="contorl" @tabClick="tabClick" :tabContorlList="['流行','新款','精选']"></home-tab-contorl>
                 <!--        数据展示-->
                 <home-msg-show :bscroll="bscroll" :showList="goods[tabContorlList].list"></home-msg-show>
             </div>
@@ -54,7 +56,9 @@
                 },
                 tabContorlList: "pop",
                 bscroll:null, //Bscroll实例
-                backTopIs:false
+                backTopIs:false,
+                tabContorl:false,
+                tabContorlTop:0
             }
         },
         created() {
@@ -73,10 +77,16 @@
             })
             this.bscroll.on('scroll' , o =>{
                 this.backTopIs = -o.y >1500
+                this.tabContorl = -o.y >= (this.tabContorlTop - 44)
             })
+
 
         },
         methods:{
+            //轮播图加载完成
+            swiperFinish(){
+                this.tabContorlTop = this.$refs.contorl.$el.offsetTop
+            },
             tabClick(val){
                 switch (val) {
                     case 0:this.tabContorlList = 'pop'
@@ -126,5 +136,13 @@
 .wrap{
     height: calc(100vh - 93px);
     margin-top: 44px;
+}
+.tabContorl{
+    position: fixed;
+    top: 44px;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    background: #ffffff;
 }
 </style>

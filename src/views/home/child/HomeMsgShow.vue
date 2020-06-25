@@ -1,6 +1,6 @@
 <template>
     <div class="goods">
-        <div class="item" v-for="(item,index) in showList">
+        <div class="item" v-for="(item,index) in showList" :key="index">
             <img :src="item.show.img" alt="" @load="imgLoad()">
             <div class="bottom">
                 <p class="title">{{item.title}}</p>

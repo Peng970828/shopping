@@ -1,9 +1,9 @@
 <template>
     <div>
         <swiper class="swiper" ref="mySwiper" :options="swiperOptions">
-            <swiper-slide v-for="(item,index) in bannerList">
+            <swiper-slide v-for="(item,index) in bannerList" :key="index">
                 <a :href="item.link">
-                    <img :src="item.image" alt="">
+                    <img :src="item.image" alt="" @load="swiperLoad()">
                 </a>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
@@ -42,17 +42,18 @@
                     // Some Swiper option/callback...
                 }
             }
+        },
+        methods:{
+            swiperLoad(){
+                this.$emit('swiperFinish')
+            }
         }
     }
 </script>
 
 <style scoped>
-
-
-
-
-    .swiper img{
-        width: 100%;
-        height: 100%;
-    }
+.swiper img{
+    width: 100%;
+    height: 100%;
+}
 </style>

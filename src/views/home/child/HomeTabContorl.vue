@@ -1,6 +1,6 @@
 <template>
     <div class="tab">
-        <div class="item" :class="{active:index === activeIndex}" v-for="(item,index) in tabContorlList" @click="tabSelect(index)">
+        <div class="item" :class="{active:index === activeIndex}" v-for="(item,index) in tabContorlList" @click="tabSelect(index)" :key="index">
             <span>
                 {{item}}
             </span>
@@ -9,12 +9,13 @@
 </template>
 
 <script>
+    const activeIndex = {
+        activeIndex:0,
+    }
     export default {
         name: "HomeTabContorl",
         data(){
-            return{
-                activeIndex:0,
-            }
+            return activeIndex
         },
         props:{
             tabContorlList:{
