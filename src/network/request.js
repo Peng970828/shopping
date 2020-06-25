@@ -1,4 +1,9 @@
+import Vue from 'vue'
 import axios from 'axios'
+import { Toast } from 'vant';
+import 'vant/lib/index.css';
+
+Vue.use(Toast);
 
 export function request(config) {
     return new Promise((resolve, reject) => {
@@ -8,10 +13,17 @@ export function request(config) {
         })
 
         instance.interceptors.request.use(config =>{
+            Toast.loading({
+                message: '加载中...',
+                forbidClick: true,
+                loadingType: 'spinner',
+                duration: 0
+            });
             return config
         })
 
         instance.interceptors.response.use(data =>{
+            Toast.clear()
             return data.data
         })
 

@@ -5,6 +5,7 @@ import store from './store'
 import {request} from "./network/request";
 import url from './network/url'
 
+
 Vue.prototype.url = url
 Vue.prototype.request  = request
 Vue.config.productionTip = false
