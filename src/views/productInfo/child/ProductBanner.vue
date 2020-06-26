@@ -2,7 +2,7 @@
     <div>
         <swiper class="swiper" ref="mySwiper" :options="swiperOptions">
             <swiper-slide v-for="(item,index) in bannerList" :key="index">
-                <img :src="item" alt="" >
+                <img :src="item" alt="" @load="bannerLoad">
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
@@ -36,6 +36,11 @@
                 default(){
                     return []
                 }
+            }
+        },
+        methods:{
+            bannerLoad(){
+                this.$emit('bannerFinish')
             }
         }
     }
