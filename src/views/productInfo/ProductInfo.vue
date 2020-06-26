@@ -4,6 +4,8 @@
         <product-info-nav class="nav"></product-info-nav>
 <!--        轮播图-->
         <product-banner :bannerList="bannerList"></product-banner>
+<!--        商品详情-->
+        <product-info-msg :productInfo="productInfo"></product-info-msg>
         <ul>
             <li>1</li>
             <li>1</li>
@@ -50,17 +52,20 @@
 <script>
     import ProductInfoNav from './child/ProductInfoNav'
     import ProductBanner from './child/ProductBanner'
+    import ProductInfoMsg from  './child/ProductInfoMsg'
     export default {
         name: "ProductInfo",
         data(){
             return {
                 productID:null, //商品id
-                bannerList:[]  //商品详情的轮播图
+                bannerList:[],  //商品详情的轮播图
+                productInfo:{}  //商品详情信息
             }
         },
         components:{
             ProductInfoNav,
-            ProductBanner
+            ProductBanner,
+            ProductInfoMsg
         },
         created() {
             this.productID = this.$route.query.iid
@@ -77,6 +82,12 @@
                 }).then( res =>{
                     console.log(res);
                     this.bannerList = res.result.itemInfo.topImages
+                    this.productInfo.title = res.result.itemInfo.title
+                    this.productInfo.price = res.result.itemInfo.price
+                    this.productInfo.oldPrice = res.result.itemInfo.oldPrice
+                    this.productInfo.discountDesc = res.result.itemInfo.discountDesc
+                    this.productInfo.columns = res.result.columns
+                    this.productInfo.services = res.result.shopInfo.services
                 })
             }
         }
