@@ -17,7 +17,7 @@
             </div>
         </div>
         <!--底部Bar-->
-        <product-bottom></product-bottom>
+        <product-bottom @addCart="addCart"></product-bottom>
     </div>
 </template>
 
@@ -42,7 +42,8 @@
                     oldPrice:0,
                     discountDesc:'',
                     columns:[],
-                    services:[]
+                    services:[],
+
                 },  //商品详情信息
                 shopInfo:{
                     shopLogo:'',
@@ -50,7 +51,9 @@
                     cSells:0,
                     cGoods:0,
                     shopUrl:'',
-                    score:[]
+                    score:[],
+                    lowNowPrice:'',
+                    desc:''
                 }, //商家信息详情
                 productShow:[], //商品图片展示
                 productParams:{
@@ -71,10 +74,26 @@
             BScroll
         },
         created() {
-            this.productID = this.$route.query.iid
+            this.productID = this.$route.query.iid;
             this.getProductInfo()
         },
         methods:{
+            //加入购物车
+            addCart(){
+                this.$toast('加入购物车成功')
+
+                let obj = {
+                    iid:this.productID,
+                    img:this.bannerList[0],
+                    title:this.productInfo.title,
+                    price:this.shopInfo.lowNowPrice,
+                    desc:this.shopInfo.desc,
+                    checked:true,
+                    count:1
+                }
+                this.$store.commit('addCartData',obj)
+            },
+
             getProductInfo(){
                 this.request({
                     url:this.url.productData,
@@ -85,24 +104,26 @@
                 }).then( res =>{
                     console.log(res);
                     //商品详情赋值
-                    this.bannerList = res.result.itemInfo.topImages
-                    this.productInfo.title = res.result.itemInfo.title
-                    this.productInfo.price = res.result.itemInfo.price
-                    this.productInfo.oldPrice = res.result.itemInfo.oldPrice
-                    this.productInfo.discountDesc = res.result.itemInfo.discountDesc
-                    this.productInfo.columns = res.result.columns
-                    this.productInfo.services = res.result.shopInfo.services
+                    this.bannerList = res.result.itemInfo.topImages;
+                    this.productInfo.title = res.result.itemInfo.title;
+                    this.productInfo.price = res.result.itemInfo.price;
+                    this.productInfo.oldPrice = res.result.itemInfo.oldPrice;
+                    this.productInfo.discountDesc = res.result.itemInfo.discountDesc;
+                    this.productInfo.columns = res.result.columns;
+                    this.productInfo.services = res.result.shopInfo.services;
+                    this.shopInfo.lowNowPrice = res.result.itemInfo.lowNowPrice;
+                    this.shopInfo.desc = res.result.itemInfo.desc;
                     //商家信息赋值
-                    this.shopInfo.shopLogo = res.result.shopInfo.shopLogo
-                    this.shopInfo.name = res.result.shopInfo.name
-                    this.shopInfo.cSells = res.result.shopInfo.cSells
-                    this.shopInfo.cGoods = res.result.shopInfo.cGoods
-                    this.shopInfo.shopUrl = res.result.shopInfo.shopUrl
-                    this.shopInfo.score = res.result.shopInfo.score
+                    this.shopInfo.shopLogo = res.result.shopInfo.shopLogo;
+                    this.shopInfo.name = res.result.shopInfo.name;
+                    this.shopInfo.cSells = res.result.shopInfo.cSells;
+                    this.shopInfo.cGoods = res.result.shopInfo.cGoods;
+                    this.shopInfo.shopUrl = res.result.shopInfo.shopUrl;
+                    this.shopInfo.score = res.result.shopInfo.score;
                     //图片展示赋值
-                    this.productShow = res.result.detailInfo.detailImage[0].list
+                    this.productShow = res.result.detailInfo.detailImage[0].list;
                     //商品参数赋值
-                    this.productParams.info = res.result.itemParams.info.set
+                    this.productParams.info = res.result.itemParams.info.set;
                     this.productParams.rule = res.result.itemParams.rule.tables[0]
                 })
             },
@@ -136,9 +157,9 @@
     z-index: 999;
     background: #ffffff;
 }
-    .wrap{
-        margin-top: 44px;
-        height: calc(100vh - 44px - 58px);
-        background: white;
-    }
+.wrap{
+    margin-top: 44px;
+    height: calc(100vh - 44px - 58px);
+    background: white;
+}
 </style>
